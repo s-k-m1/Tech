@@ -6,3 +6,4 @@ from .ticket import *
 from .notification import *
 from .erp import *
 from .accounting import *
+from .security import *

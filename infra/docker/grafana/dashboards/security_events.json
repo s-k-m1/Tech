@@ -1,0 +1,33 @@
+{
+  "title": "SK Tech - Security Events",
+  "uid": "sk-tech-security",
+  "schemaVersion": 38,
+  "version": 1,
+  "tags": ["sk-tech", "security"],
+  "panels": [
+    {
+      "title": "Blocked Threats by Type",
+      "type": "piechart",
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+      "targets": [{"expr": "sum by (attack_type) (rate(django_security_threats_total[24h]))", "legendFormat": "{{attack_type}}"}]
+    },
+    {
+      "title": "Security Events over Time",
+      "type": "graph",
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+      "targets": [{"expr": "rate(django_security_events_total[5m])", "legendFormat": "{{severity}}"}]
+    },
+    {
+      "title": "Active IP Blacklist Count",
+      "type": "stat",
+      "gridPos": {"x": 0, "y": 10, "w": 8, "h": 4},
+      "targets": [{"expr": "django_blacklisted_ips_active"}]
+    },
+    {
+      "title": "Rate Limit Exceeded",
+      "type": "graph",
+      "gridPos": {"x": 8, "y": 10, "w": 16, "h": 6},
+      "targets": [{"expr": "rate(django_rate_limit_exceeded_total[5m])", "legendFormat": "rate limited"}]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "title": "SK Tech - Business Metrics",
+  "uid": "sk-tech-business",
+  "schemaVersion": 38,
+  "version": 1,
+  "tags": ["sk-tech", "business"],
+  "panels": [
+    {
+      "title": "Active Users per Tenant",
+      "type": "graph",
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 6},
+      "targets": [{"expr": "django_active_users_total", "legendFormat": "active users"}]
+    },
+    {
+      "title": "API Calls by Endpoint",
+      "type": "table",
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 6},
+      "targets": [{"expr": "topk(10, sum by (view) (rate(django_http_requests_total_by_view_total[1h])))", "legendFormat": "{{view}}"}]
+    },
+    {
+      "title": "Error Rate by Status Code",
+      "type": "graph",
+      "gridPos": {"x": 0, "y": 8, "w": 24, "h": 6},
+      "targets": [{"expr": "rate(django_http_responses_total_by_status_total{status=~\"4..|5..\"}[5m])", "legendFormat": "{{status}}"}]
+    }
+  ]
+}

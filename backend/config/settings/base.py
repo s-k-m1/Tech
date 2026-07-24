@@ -24,11 +24,13 @@ INSTALLED_APPS = [
     "django_filters",
     "drf_spectacular",
     "channels",
+    "django_prometheus",
     # Local
     "apps.core",
 ]
 
 MIDDLEWARE = [
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -41,6 +43,7 @@ MIDDLEWARE = [
     "apps.core.middleware.TenantMiddleware",
     "apps.core.middleware.AuditLogMiddleware",
     "apps.core.middleware.SecurityMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -124,7 +127,12 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "anon": "100/hour",
         "user": "1000/hour",
+        "login": "5/minute",
+        "register": "3/minute",
+        "password_reset": "3/hour",
+        "otp_verify": "5/minute",
     },
+    "NUM_PROXIES": 1,
     "EXCEPTION_HANDLER": "apps.core.utils.exception_handler.custom_exception_handler",
 }
 

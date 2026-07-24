@@ -18,29 +18,29 @@ class WAFEngine:
 
     def validate_request(self, request):
         if not self.validator.validate_method(request.method):
-            return {"allowed": False, "reason": "HTTP method not allowed"}
+            return {"allowed": False, "reason": "HTTP method not allowed", "attack_type": "invalid_method"}
 
         for pattern, attack_type in self.blocked_patterns:
             if request.body:
                 if re.search(pattern, request.body.decode("utf-8", errors="ignore"), re.IGNORECASE):
-                    return {"allowed": False, "reason": f"Blocked: {attack_type} detected in body"}
+                    return {"allowed": False, "reason": f"Blocked: {attack_type} detected in body", "attack_type": attack_type}
 
             for key, value in request.GET.items():
                 if re.search(pattern, str(value), re.IGNORECASE):
-                    return {"allowed": False, "reason": f"Blocked: {attack_type} detected in query param {key}"}
+                    return {"allowed": False, "reason": f"Blocked: {attack_type} detected in query param {key}", "attack_type": attack_type}
 
             for key, value in request.POST.items():
                 if re.search(pattern, str(value), re.IGNORECASE):
-                    return {"allowed": False, "reason": f"Blocked: {attack_type} detected in form data {key}"}
+                    return {"allowed": False, "reason": f"Blocked: {attack_type} detected in form data {key}", "attack_type": attack_type}
 
             for key, value in request.headers.items():
                 if re.search(pattern, str(value), re.IGNORECASE):
-                    return {"allowed": False, "reason": f"Blocked: {attack_type} detected in header {key}"}
+                    return {"allowed": False, "reason": f"Blocked: {attack_type} detected in header {key}", "attack_type": attack_type}
 
         if not self.validator.validate_content_type(request):
-            return {"allowed": False, "reason": "Content-Type not allowed"}
+            return {"allowed": False, "reason": "Content-Type not allowed", "attack_type": "invalid_content_type"}
 
         if not self.validator.validate_file_upload(request):
-            return {"allowed": False, "reason": "File upload validation failed"}
+            return {"allowed": False, "reason": "File upload validation failed", "attack_type": "malicious_upload"}
 
-        return {"allowed": True}
+        return {"allowed": True, "attack_type": None}

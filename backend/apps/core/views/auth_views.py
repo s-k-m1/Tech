@@ -8,13 +8,14 @@ from apps.core.serializers.auth_serializers import (
     RegisterSerializer, LoginSerializer, UserSerializer, DeviceSerializer
 )
 from apps.core.services.auth_service import AuthService
-from apps.core.utils.rate_limit import rate_limit
+from apps.core.throttles import LoginRateThrottle, RegisterRateThrottle, OTPRateThrottle
 
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
+    throttle_classes = [RegisterRateThrottle]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -28,8 +29,8 @@ class RegisterView(generics.CreateAPIView):
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
+    throttle_classes = [LoginRateThrottle]
 
-    @rate_limit(key="login", limit=5, period=60)
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -59,6 +60,7 @@ class LoginView(APIView):
 
 class VerifyOTPView(APIView):
     permission_classes = [permissions.AllowAny]
+    throttle_classes = [OTPRateThrottle]
 
     def post(self, request):
         auth_service = AuthService()

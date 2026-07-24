@@ -1,0 +1,39 @@
+{
+  "title": "SK Tech - System Overview",
+  "uid": "sk-tech-system",
+  "schemaVersion": 38,
+  "version": 1,
+  "tags": ["sk-tech", "production"],
+  "panels": [
+    {
+      "title": "HTTP Requests per Second",
+      "type": "graph",
+      "gridPos": {"x": 0, "y": 0, "w": 8, "h": 6},
+      "targets": [{"expr": "rate(django_http_requests_total[5m])", "legendFormat": "requests"}]
+    },
+    {
+      "title": "Request Duration (p95)",
+      "type": "graph",
+      "gridPos": {"x": 8, "y": 0, "w": 8, "h": 6},
+      "targets": [{"expr": "histogram_quantile(0.95, sum(rate(django_http_requests_duration_seconds_bucket[5m])) by (le))", "legendFormat": "p95"}]
+    },
+    {
+      "title": "Active DB Connections",
+      "type": "graph",
+      "gridPos": {"x": 16, "y": 0, "w": 8, "h": 6},
+      "targets": [{"expr": "django_db_connections", "legendFormat": "connections"}]
+    },
+    {
+      "title": "Redis Operations per Second",
+      "type": "graph",
+      "gridPos": {"x": 0, "y": 8, "w": 12, "h": 6},
+      "targets": [{"expr": "rate(redis_commands_total[5m])", "legendFormat": "commands"}]
+    },
+    {
+      "title": "Celery Queue Length",
+      "type": "graph",
+      "gridPos": {"x": 12, "y": 8, "w": 12, "h": 6},
+      "targets": [{"expr": "celery_queue_length", "legendFormat": "{{queue}}"}]
+    }
+  ]
+}
