@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import useWebSocket from './hooks/useWebSocket'
 import MainLayout from './layouts/MainLayout'
 import AuthLayout from './layouts/AuthLayout'
 import LoginPage from './pages/auth/LoginPage'
@@ -10,13 +11,17 @@ import HrmPage from './pages/hrm/HrmPage'
 import ProjectsPage from './pages/projects/ProjectsPage'
 import TicketsPage from './pages/tickets/TicketsPage'
 import SecurityPage from './pages/security/SecurityPage'
+import ErpPage from './pages/erp/ErpPage'
+import AccountingPage from './pages/accounting/AccountingPage'
+import SettingsPage from './pages/settings/SettingsPage'
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useSelector((state) => state.auth)
   return isAuthenticated ? children : <Navigate to="/auth/login" />
 }
 
-export default function App() {
+function AppRoutes() {
+  useWebSocket()
   return (
     <Routes>
       <Route path="/auth" element={<AuthLayout />}>
@@ -38,7 +43,14 @@ export default function App() {
         <Route path="projects/*" element={<ProjectsPage />} />
         <Route path="tickets/*" element={<TicketsPage />} />
         <Route path="security/*" element={<SecurityPage />} />
+        <Route path="erp/*" element={<ErpPage />} />
+        <Route path="accounting/*" element={<AccountingPage />} />
+        <Route path="settings/*" element={<SettingsPage />} />
       </Route>
     </Routes>
   )
+}
+
+export default function App() {
+  return <AppRoutes />
 }

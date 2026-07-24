@@ -1,15 +1,12 @@
+import { Routes, Route, Navigate } from 'react-router-dom'
+import KanbanBoard from './KanbanBoard'
+
 export default function ProjectsPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Projects</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {['Projects', 'Tasks', 'Milestones', 'Sprints', 'Kanban Board'].map((item) => (
-          <div key={item} className="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow cursor-pointer">
-            <h3 className="font-semibold text-gray-800">{item}</h3>
-            <p className="text-sm text-gray-500 mt-1">Manage {item.toLowerCase()}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Routes>
+      <Route index element={<Navigate to="kanban" />} />
+      <Route path="kanban" element={<KanbanBoard />} />
+      <Route path="*" element={<Navigate to="kanban" />} />
+    </Routes>
   )
 }

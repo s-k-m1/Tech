@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../features/auth/authSlice'
 import {
   LayoutDashboard, Users, Briefcase, FolderKanban, Ticket,
-  Shield, Bell, LogOut, Menu, X, ChevronDown,
+  Shield, Bell, LogOut, Menu, X, ChevronDown, Warehouse,
+  DollarSign, Settings,
 } from 'lucide-react'
 
 const navigation = [
@@ -13,7 +14,10 @@ const navigation = [
   { name: 'HRM', path: '/hrm', icon: Briefcase },
   { name: 'Projects', path: '/projects', icon: FolderKanban },
   { name: 'Tickets', path: '/tickets', icon: Ticket },
+  { name: 'ERP', path: '/erp', icon: Warehouse },
+  { name: 'Accounting', path: '/accounting', icon: DollarSign },
   { name: 'Security', path: '/security', icon: Shield },
+  { name: 'Settings', path: '/settings', icon: Settings },
 ]
 
 export default function MainLayout() {

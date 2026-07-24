@@ -1,15 +1,38 @@
+import { Routes, Route, Navigate, NavLink } from 'react-router-dom'
+import ProductsList from './ProductsList'
+
+const tabs = [
+  { name: 'Products', path: '/erp/products' },
+  { name: 'Inventory', path: '/erp/inventory' },
+  { name: 'Purchase Orders', path: '/erp/purchase-orders' },
+]
+
 export default function ErpPage() {
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">ERP</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {['Inventory', 'Purchases', 'Invoices', 'Suppliers', 'Reports'].map((item) => (
-          <div key={item} className="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow cursor-pointer">
-            <h3 className="font-semibold text-gray-800">{item}</h3>
-            <p className="text-sm text-gray-500 mt-1">Manage {item.toLowerCase()}</p>
-          </div>
-        ))}
+      <div className="border-b border-gray-200 mb-6">
+        <nav className="flex gap-6">
+          {tabs.map((tab) => (
+            <NavLink
+              key={tab.path}
+              to={tab.path}
+              className={({ isActive }) =>
+                `pb-3 text-sm font-medium border-b-2 transition-colors ${
+                  isActive ? 'border-primary-600 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`
+              }
+            >
+              {tab.name}
+            </NavLink>
+          ))}
+        </nav>
       </div>
+      <Routes>
+        <Route index element={<Navigate to="products" />} />
+        <Route path="products" element={<ProductsList />} />
+        <Route path="inventory" element={<div className="text-center py-12 text-gray-500">Inventory coming soon</div>} />
+        <Route path="purchase-orders" element={<div className="text-center py-12 text-gray-500">Purchase Orders coming soon</div>} />
+      </Routes>
     </div>
   )
 }

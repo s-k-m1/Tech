@@ -63,11 +63,16 @@ export const hrmService = {
   getAttendance: () => api.get('/hrm/attendance/'),
   getLeaves: () => api.get('/hrm/leaves/'),
   getPayroll: () => api.get('/hrm/payroll/'),
+  createLeave: (data) => api.post('/hrm/leaves/', data),
+  updateLeave: (id, data) => api.put(`/hrm/leaves/${id}/`, data),
 }
 
 export const projectService = {
   getProjects: () => api.get('/projects/projects/'),
   getTasks: () => api.get('/projects/tasks/'),
+  createTask: (data) => api.post('/projects/tasks/', data),
+  updateTask: (id, data) => api.put(`/projects/tasks/${id}/`, data),
+  deleteTask: (id) => api.delete(`/projects/tasks/${id}/`),
   getMilestones: () => api.get('/projects/milestones/'),
   getSprints: () => api.get('/projects/sprints/'),
 }
@@ -86,6 +91,23 @@ export const securityService = {
 export const notificationService = {
   getNotifications: () => api.get('/notifications/notifications/'),
   markAsRead: (id) => api.patch(`/notifications/notifications/${id}/`, { is_read: true }),
+}
+
+export const erpService = {
+  getSuppliers: () => api.get('/erp/suppliers/'),
+  getWarehouses: () => api.get('/erp/warehouses/'),
+  getProducts: () => api.get('/erp/products/'),
+  getInventory: () => api.get('/erp/inventory/'),
+  getPurchaseOrders: () => api.get('/erp/purchase-orders/'),
+  getInvoices: () => api.get('/erp/invoices/'),
+}
+
+export const accountingService = {
+  getAccounts: () => api.get('/accounting/accounts/'),
+  getAccountTypes: () => api.get('/accounting/account-types/'),
+  getJournalEntries: () => api.get('/accounting/journal-entries/'),
+  getTransactions: () => api.get('/accounting/transactions/'),
+  getBudgets: () => api.get('/accounting/budgets/'),
 }
 
 export default api
