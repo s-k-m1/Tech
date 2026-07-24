@@ -36,7 +36,7 @@ export default function SecurityDashboard() {
     { label: 'Total Events', value: dashboard?.total_events ?? '--', icon: Activity, color: 'text-blue-600', bg: 'bg-blue-100' },
     { label: 'Critical', value: dashboard?.critical_events ?? '--', icon: Shield, color: 'text-red-600', bg: 'bg-red-100' },
     { label: 'High Risk', value: dashboard?.high_risk_events ?? '--', icon: AlertTriangle, color: 'text-orange-600', bg: 'bg-orange-100' },
-    { label: 'Low Risk', value: dashboard?.low_risk_events ?? '--', icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-100' },
+    { label: 'Low Risk', value: dashboard ? Math.max(0, (dashboard.total_events || 0) - (dashboard.critical_events || 0) - (dashboard.high_risk_events || 0)) : '--', icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-100' },
   ]
 
   return (

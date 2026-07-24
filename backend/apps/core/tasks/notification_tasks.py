@@ -15,8 +15,8 @@ def send_email(recipient, subject, message):
 
 
 @shared_task
-def send_bulk_email(recipient_list, subject, message):
-    for recipient, subj, msg in recipient_list:
+def send_bulk_email(emails):
+    for recipient, subj, msg in emails:
         send_mail(subj, msg, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=False)
 
 

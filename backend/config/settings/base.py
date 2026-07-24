@@ -182,7 +182,7 @@ CELERY_TIMEZONE = "UTC"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.environ.get("REDIS_URL", "redis://localhost:6379/1"),
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "PARSER_CLASS": "redis.connection.HiredisParser",
@@ -193,11 +193,13 @@ CACHES = {
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
+REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/1")
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ.get("REDIS_URL", "redis://localhost:6379/2")],
+            "hosts": [os.environ.get("REDIS_URL_CHANNELS", REDIS_URL.replace("/1", "/2"))],
             "symmetric_encryption_keys": [SECRET_KEY],
         },
     },

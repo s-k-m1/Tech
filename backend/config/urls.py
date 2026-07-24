@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework_simplejwt.views import TokenRefreshView
 from apps.core.views.health_views import health_check, readiness_check
 from apps.core.views.security_views import SecurityDashboardView, SecurityReportView
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
     path("api/auth/", include("apps.core.urls.auth_urls")),
+    path("api/auth/token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
     path("api/crm/", include("apps.core.urls.crm_urls")),
     path("api/hrm/", include("apps.core.urls.hrm_urls")),
     path("api/projects/", include("apps.core.urls.project_urls")),
