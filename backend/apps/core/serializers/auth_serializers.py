@@ -40,6 +40,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
+        from apps.core.tasks.notification_tasks import send_verification_email
+        send_verification_email.delay(user.email, user.id)
         return user
 
 

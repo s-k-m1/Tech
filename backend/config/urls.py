@@ -11,6 +11,7 @@ urlpatterns = [
     path("health/", health_check, name="health"),
     path("ready/", readiness_check, name="readiness"),
     path("", include("django_prometheus.urls")),
+    path("accounts/", include("allauth.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
     path("api/auth/", include("apps.core.urls.auth_urls")),
@@ -22,6 +23,7 @@ urlpatterns = [
     path("api/security/", include("apps.core.urls.security_urls")),
     path("api/erp/", include("apps.core.urls.erp_urls")),
     path("api/accounting/", include("apps.core.urls.accounting_urls")),
+    path("api/social-auth/", include("apps.core.urls.social_auth_urls")),
 ]
 
 if settings.DEBUG:

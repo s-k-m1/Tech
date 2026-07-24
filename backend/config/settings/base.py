@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
     "django.contrib.staticfiles",
     # Third party
     "rest_framework",
@@ -25,6 +26,12 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "channels",
     "django_prometheus",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.microsoft",
     # Local
     "apps.core",
 ]
@@ -80,6 +87,26 @@ DATABASES = {
         "ATOMIC_REQUESTS": True,
         "CONN_MAX_AGE": 60,
     }
+}
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+    },
+    "github": {
+        "SCOPE": ["user:email"],
+    },
+    "microsoft": {
+        "SCOPE": ["User.Read"],
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -175,6 +202,8 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "SK Tech API",

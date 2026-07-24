@@ -3,6 +3,7 @@ from apps.core.views.auth_views import (
     RegisterView, LoginView, VerifyOTPView, LogoutView,
     ProfileView, DeviceListView, DeviceDeleteView,
 )
+from apps.core.views.email_views import VerifyEmailView, ResendVerificationView
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="auth-register"),
@@ -12,4 +13,6 @@ urlpatterns = [
     path("profile/", ProfileView.as_view(), name="auth-profile"),
     path("devices/", DeviceListView.as_view(), name="auth-devices"),
     path("devices/<uuid:pk>/", DeviceDeleteView.as_view(), name="auth-device-delete"),
+    path("verify-email/", VerifyEmailView.as_view(), name="auth-verify-email"),
+    path("resend-verification/", ResendVerificationView.as_view(), name="auth-resend-verification"),
 ]
