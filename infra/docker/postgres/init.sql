@@ -1,0 +1,2 @@
+CREATE DATABASE sk_tech;
+CREATE DATABASE sk_tech_dev;
