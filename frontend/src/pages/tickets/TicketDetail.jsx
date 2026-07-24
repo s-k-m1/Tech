@@ -25,11 +25,21 @@ export default function TicketDetail() {
     })()
   }, [id])
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await ticketService.getComments()
+        const ticketComments = (res.data.results || res.data).filter(c => c.ticket === id)
+        setComments(ticketComments)
+      } catch { /* silent */ }
+    })()
+  }, [id])
+
   const handleAddComment = async () => {
     if (!newComment.trim()) return
     try {
-      const { TicketCommentSerializer } = await import('../../services/api')
-      setComments([...comments, { content: newComment, author_name: 'You', created_at: new Date().toISOString() }])
+      const res = await ticketService.createComment({ ticket: id, content: newComment })
+      setComments([...comments, res.data])
       setNewComment('')
       toast.success('Comment added')
     } catch { toast.error('Failed to add comment') }

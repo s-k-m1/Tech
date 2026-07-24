@@ -1,10 +1,16 @@
 import { Routes, Route, Navigate, NavLink } from 'react-router-dom'
 import AccountsList from './AccountsList'
+import TransactionsList from './TransactionsList'
+import BudgetsList from './BudgetsList'
+import AccountTypesList from './AccountTypesList'
+import JournalEntriesList from './JournalEntriesList'
 
 const tabs = [
   { name: 'Accounts', path: '/accounting/accounts' },
   { name: 'Transactions', path: '/accounting/transactions' },
   { name: 'Budgets', path: '/accounting/budgets' },
+  { name: 'Account Types', path: '/accounting/account-types' },
+  { name: 'Journal Entries', path: '/accounting/journal-entries' },
 ]
 
 export default function AccountingPage() {
@@ -30,8 +36,10 @@ export default function AccountingPage() {
       <Routes>
         <Route index element={<Navigate to="accounts" />} />
         <Route path="accounts" element={<AccountsList />} />
-        <Route path="transactions" element={<div className="text-center py-12 text-gray-500">Transactions coming soon</div>} />
-        <Route path="budgets" element={<div className="text-center py-12 text-gray-500">Budgets coming soon</div>} />
+        <Route path="transactions" element={<TransactionsList />} />
+        <Route path="budgets" element={<BudgetsList />} />
+        <Route path="account-types" element={<AccountTypesList />} />
+        <Route path="journal-entries" element={<JournalEntriesList />} />
       </Routes>
     </div>
   )

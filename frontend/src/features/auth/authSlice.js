@@ -34,6 +34,8 @@ const authSlice = createSlice({
       state.tokens = null
       state.isAuthenticated = false
       state.error = null
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
     },
     clearError: (state) => {
       state.error = null
@@ -53,6 +55,8 @@ const authSlice = createSlice({
           access: action.payload.access_token,
           refresh: action.payload.refresh_token,
         }
+        localStorage.setItem('access_token', action.payload.access_token)
+        localStorage.setItem('refresh_token', action.payload.refresh_token)
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false

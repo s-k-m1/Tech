@@ -7,6 +7,8 @@ import ticketReducer from './tickets/ticketSlice'
 import dashboardReducer from './dashboard/dashboardSlice'
 import securityReducer from './security/securitySlice'
 import notificationReducer from './notifications/notificationSlice'
+import erpReducer from './erp/erpSlice'
+import accountingReducer from './accounting/accountingSlice'
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +20,7 @@ export const store = configureStore({
     dashboard: dashboardReducer,
     security: securityReducer,
     notifications: notificationReducer,
+    erp: erpReducer,
+    accounting: accountingReducer,
   },
 })

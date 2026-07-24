@@ -1,4 +1,8 @@
 import { Routes, Route, Navigate, NavLink } from 'react-router-dom'
+import ProfilePage from './ProfilePage'
+import SecurityPage from './SecurityPage'
+import BranchesPage from './BranchesPage'
+import RolesPage from './RolesPage'
 
 const tabs = [
   { name: 'Profile', path: '/settings/profile' },
@@ -29,10 +33,10 @@ export default function SettingsPage() {
       </div>
       <Routes>
         <Route index element={<Navigate to="profile" />} />
-        <Route path="profile" element={<div className="bg-white rounded-lg border p-6 max-w-lg"><h2 className="text-lg font-semibold mb-4">Profile Settings</h2><p className="text-gray-500">Coming soon</p></div>} />
-        <Route path="security" element={<div className="bg-white rounded-lg border p-6 max-w-lg"><h2 className="text-lg font-semibold mb-4">Security Settings</h2><p className="text-gray-500">2FA, sessions, and device management coming soon</p></div>} />
-        <Route path="branches" element={<div className="bg-white rounded-lg border p-6 max-w-lg"><h2 className="text-lg font-semibold mb-4">Branch Management</h2><p className="text-gray-500">Coming soon</p></div>} />
-        <Route path="roles" element={<div className="bg-white rounded-lg border p-6 max-w-lg"><h2 className="text-lg font-semibold mb-4">Roles & Permissions</h2><p className="text-gray-500">Coming soon</p></div>} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="security" element={<SecurityPage />} />
+        <Route path="branches" element={<BranchesPage />} />
+        <Route path="roles" element={<RolesPage />} />
       </Routes>
     </div>
   )

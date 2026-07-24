@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../features/auth/authSlice'
+import NotificationsDropdown from '../components/ui/NotificationsDropdown'
 import {
   LayoutDashboard, Users, Briefcase, FolderKanban, Ticket,
-  Shield, Bell, LogOut, Menu, X, ChevronDown, Warehouse,
+  Shield, LogOut, Menu, X, Warehouse,
   DollarSign, Settings,
 } from 'lucide-react'
 
@@ -25,7 +26,6 @@ export default function MainLayout() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector((state) => state.auth.user)
-  const unreadCount = useSelector((state) => state.notifications.unreadCount)
 
   const handleLogout = () => {
     dispatch(logout())
@@ -70,14 +70,7 @@ export default function MainLayout() {
           </button>
           <div className="flex-1" />
           <div className="flex items-center gap-4">
-            <button className="relative p-2 text-gray-500 hover:text-gray-700">
-              <Bell className="h-5 w-5" />
-              {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                  {unreadCount}
-                </span>
-              )}
-            </button>
+            <NotificationsDropdown />
             <div className="flex items-center gap-3">
               <div className="text-right">
                 <p className="text-sm font-medium text-gray-700">{user?.email}</p>

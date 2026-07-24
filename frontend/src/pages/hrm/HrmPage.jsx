@@ -2,10 +2,14 @@ import { Routes, Route, Navigate, NavLink } from 'react-router-dom'
 import EmployeesList from './EmployeesList'
 import LeavesList from './LeavesList'
 import LeaveForm from './LeaveForm'
+import AttendanceList from './AttendanceList'
+import PayrollList from './PayrollList'
 
 const tabs = [
   { name: 'Employees', path: '/hrm/employees' },
+  { name: 'Attendance', path: '/hrm/attendance' },
   { name: 'Leaves', path: '/hrm/leaves' },
+  { name: 'Payroll', path: '/hrm/payroll' },
   { name: 'Apply Leave', path: '/hrm/apply-leave' },
 ]
 
@@ -32,7 +36,9 @@ export default function HrmPage() {
       <Routes>
         <Route index element={<Navigate to="employees" />} />
         <Route path="employees" element={<EmployeesList />} />
+        <Route path="attendance" element={<AttendanceList />} />
         <Route path="leaves" element={<LeavesList />} />
+        <Route path="payroll" element={<PayrollList />} />
         <Route path="apply-leave" element={<LeaveForm />} />
       </Routes>
     </div>

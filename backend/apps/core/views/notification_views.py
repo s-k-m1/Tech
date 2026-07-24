@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import viewsets, mixins
 from apps.core.models.notification import Notification
 from apps.core.serializers.notification_serializers import NotificationSerializer

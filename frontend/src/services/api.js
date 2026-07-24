@@ -81,6 +81,8 @@ export const ticketService = {
   getTickets: () => api.get('/tickets/tickets/'),
   createTicket: (data) => api.post('/tickets/tickets/', data),
   updateTicket: (id, data) => api.put(`/tickets/tickets/${id}/`, data),
+  getComments: () => api.get('/tickets/comments/'),
+  createComment: (data) => api.post('/tickets/comments/', data),
 }
 
 export const securityService = {

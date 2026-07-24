@@ -24,13 +24,18 @@ def run_security_scan():
 
 
 @shared_task
-def analyze_login_attempt(user_id, request_data):
+def analyze_login_attempt(user_id, meta_data):
     from apps.core.ai.login_risk_analyzer import LoginRiskAnalyzer
     from apps.core.models import User
+    from unittest.mock import Mock
 
     user = User.objects.get(id=user_id)
+    mock_request = Mock()
+    mock_request.META = meta_data.get("META", {})
+    mock_request.user = user
+
     analyzer = LoginRiskAnalyzer()
-    risk_score = analyzer.analyze(user, request_data)
+    risk_score = analyzer.analyze(user, mock_request)
 
     user.risk_score = risk_score
     user.save(update_fields=["risk_score"])

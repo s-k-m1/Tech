@@ -1,7 +1,36 @@
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { projectService, ticketService, hrmService, crmService } from '../../services/api'
 
 export default function DashboardPage() {
   const user = useSelector((state) => state.auth.user)
+  const [stats, setStats] = useState({ projects: 0, tickets: 0, employees: 0, leads: 0 })
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const [projRes, ticketRes, empRes, leadRes] = await Promise.all([
+          projectService.getProjects(),
+          ticketService.getTickets(),
+          hrmService.getEmployees(),
+          crmService.getLeads(),
+        ])
+        setStats({
+          projects: (projRes.data.results || projRes.data).length,
+          tickets: (ticketRes.data.results || ticketRes.data).length,
+          employees: (empRes.data.results || empRes.data).length,
+          leads: (leadRes.data.results || leadRes.data).length,
+        })
+      } catch { /* silent */ }
+    })()
+  }, [])
+
+  const cards = [
+    { label: 'Active Projects', value: stats.projects, color: 'bg-blue-500' },
+    { label: 'Open Tickets', value: stats.tickets, color: 'bg-yellow-500' },
+    { label: 'Employees', value: stats.employees, color: 'bg-green-500' },
+    { label: 'Leads', value: stats.leads, color: 'bg-purple-500' },
+  ]
 
   return (
     <div>
@@ -9,12 +38,7 @@ export default function DashboardPage() {
         Welcome, {user?.first_name || user?.username || 'User'}
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          { label: 'Active Projects', value: '--', color: 'bg-blue-500' },
-          { label: 'Open Tickets', value: '--', color: 'bg-yellow-500' },
-          { label: 'Employees', value: '--', color: 'bg-green-500' },
-          { label: 'Leads', value: '--', color: 'bg-purple-500' },
-        ].map((stat) => (
+        {cards.map((stat) => (
           <div key={stat.label} className="bg-white rounded-lg shadow p-6">
             <div className={`h-2 w-12 rounded ${stat.color} mb-4`} />
             <p className="text-3xl font-bold text-gray-800">{stat.value}</p>
