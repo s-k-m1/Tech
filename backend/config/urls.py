@@ -15,6 +15,9 @@ urlpatterns = [
     path("api/tickets/", include("apps.core.urls.ticket_urls")),
     path("api/notifications/", include("apps.core.urls.notification_urls")),
     path("api/security/", include("apps.core.urls.security_urls")),
+    path("api/erp/", include("apps.core.urls.erp_urls")),
+    path("api/accounting/", include("apps.core.urls.accounting_urls")),
+]
 ]
 
 if settings.DEBUG:

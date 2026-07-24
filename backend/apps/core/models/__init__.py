@@ -4,3 +4,5 @@ from .hrm import *
 from .project import *
 from .ticket import *
 from .notification import *
+from .erp import *
+from .accounting import *

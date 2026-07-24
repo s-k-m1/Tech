@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
     "drf_spectacular",
+    "channels",
     # Local
     "apps.core",
 ]
@@ -60,6 +61,7 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = "config.asgi.application"
 WSGI_APPLICATION = "config.wsgi.application"
 
 AUTH_USER_MODEL = "core.User"
@@ -85,6 +87,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@sktech.io")
 USE_I18N = True
 USE_TZ = True
 
@@ -154,6 +157,16 @@ CACHES = {
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get("REDIS_URL", "redis://localhost:6379/2")],
+            "symmetric_encryption_keys": [SECRET_KEY],
+        },
+    },
+}
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "SK Tech API",
